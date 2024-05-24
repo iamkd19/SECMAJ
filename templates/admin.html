@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+</head>
+<body>
+    <h1>Admin Panel</h1>
+    
+    <h2>Add New Subject</h2>
+    <form action="{{ url_for('add_subject') }}" method="POST">
+        <label for="name">Subject Name:</label>
+        <input type="text" id="name" name="name" required><br>
+        <label for="year">Year:</label>
+        <input type="number" id="year" name="year" required><br>
+        <label for="total_classes">Total Classes:</label>
+        <input type="number" id="total_classes" name="total_classes" required><br>
+        <button type="submit">Add Subject</button>
+    </form>
+
+    <h2>Existing Subjects</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Year</th>
+            <th>Total Classes</th>
+            <th>Action</th>
+        </tr>
+        {% for subject in subjects %}
+        <tr>
+            <td>{{ subject[0] }}</td>
+            <td>{{ subject[1] }}</td>
+            <td>{{ subject[2] }}</td>
+            <td>{{ subject[3] }}</td>
+            <td><a href="{{ url_for('delete_subject', id=subject[0]) }}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

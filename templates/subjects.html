@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Subjects</title>
+</head>
+<body>
+    <h1>Manage Subjects</h1>
+    <form method="POST" action="{{ url_for('subjects') }}">
+        <label for="name">Subject Name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="year">Year:</label>
+        <input type="number" id="year" name="year" required>
+        <label for="total_classes">Total Classes:</label>
+        <input type="number" id="total_classes" name="total_classes" required>
+        <button type="submit">Add Subject</button>
+    </form>
+
+    <h2>Existing Subjects</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Year</th>
+            <th>Total Classes</th>
+        </tr>
+        {% for subject in subjects %}
+            <tr>
+                <td>{{ subject[0] }}</td>
+                <td>{{ subject[1] }}</td>
+                <td>{{ subject[2] }}</td>
+                <td>{{ subject[3] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

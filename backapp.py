@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 import sqlite3
-from datetime import datetime
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 
@@ -29,18 +29,25 @@ def attendance():
     
     return render_template('index.html', selected_date=selected_date, attendance_data=attendance_data)
 
-# Function to calculate and retrieve average attendance
+# Function to calculate and retrieve average attendance over the last 30 days
 def get_average_attendance():
     conn = sqlite3.connect("attendance.db")
     cursor = conn.cursor()
 
+    # Get today's date and the date 30 days ago
+    today = datetime.now()
+    last_30_days = today - timedelta(days=30)
+    formatted_today = today.strftime('%Y-%m-%d')
+    formatted_last_30_days = last_30_days.strftime('%Y-%m-%d')
+
     query = """
     SELECT name, COUNT(*) as total_days,
-           ROUND(COUNT(*) / (SELECT COUNT(DISTINCT date) FROM attendance), 2) as average_attendance
+           ROUND((COUNT(*) * 100.0) / 30, 2) as average_attendance_percentage
     FROM attendance
+    WHERE date BETWEEN ? AND ?
     GROUP BY name;
     """
-    cursor.execute(query)
+    cursor.execute(query, (formatted_last_30_days, formatted_today))
     data = cursor.fetchall()
     conn.close()
     return data
