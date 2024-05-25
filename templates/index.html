@@ -80,6 +80,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Entry Time</th>
                     <th scope="col">Exit Time</th>
+                    <th scope="col">Attendance Eligible</th> <!-- New Column -->
                 </tr>
             </thead>
             <tbody>
@@ -88,6 +89,7 @@
                     <td>{{ data[0] }}</td>
                     <td>{{ data[1] }}</td>
                     <td>{{ data[2] }}</td>
+                    <td>{% if data[3] >= 1 %}Yes{% else %}No{% endif %}</td> <!-- Calculate Eligibility -->
                 </tr>
                 {% endfor %}
             </tbody>
