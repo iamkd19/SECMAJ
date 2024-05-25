@@ -40,6 +40,17 @@
             margin-top: 10px;
             margin-bottom: 20px;
         }
+        select {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 20px;
+            font-size: 18px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
         button[type="submit"] {
             background-color: #333;
             color: #fff;
@@ -63,6 +74,14 @@
     <form action="/attendance" method="POST" id="attn-form">
         <label for="selected_date">Select Date: </label>
         <input type="date" id="selected_date" name="selected_date" required value="{{ selected_date }}">
+        <label for="subject">Select Subject: </label>
+        <select id="subject" name="subject" required>
+            <option value="Physics">Physics</option>
+            <option value="Chemistry">Chemistry</option>
+            <option value="Mathematics">Mathematics</option>
+            <option value="Biology">Biology</option>
+            <option value="English">English</option>
+        </select>
         <button type="submit" class="btn btn-outline-success">Show attendance</button>
     </form>
 
@@ -80,7 +99,8 @@
                     <th scope="col">Name</th>
                     <th scope="col">Entry Time</th>
                     <th scope="col">Exit Time</th>
-                    <th scope="col">Attendance Eligible</th> <!-- New Column -->
+                    <th scope="col">Attendance Eligible</th>
+                    <th scope="col">Subject</th> <!-- New Column for Subject -->
                 </tr>
             </thead>
             <tbody>
@@ -90,6 +110,7 @@
                     <td>{{ data[1] }}</td>
                     <td>{{ data[2] }}</td>
                     <td>{% if data[3] >= 1 %}Yes{% else %}No{% endif %}</td> <!-- Calculate Eligibility -->
+                    <td>{{ data[4] }}</td> <!-- Display Subject -->
                 </tr>
                 {% endfor %}
             </tbody>
